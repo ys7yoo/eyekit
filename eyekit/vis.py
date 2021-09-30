@@ -128,13 +128,13 @@ class Image:
                 )
         else:
             rgb_color = _color_to_rgb(color, default=(0, 0, 0))
-            for line in text_block.lines():
+            for word in text_block.words(alphabetical_only=False):
                 self._add_component(
                     _draw_text,
                     {
-                        "x": line._x_tl,
-                        "y": line.baseline,
-                        "text": line.display_text,
+                        "x": word._x_tl,
+                        "y": word._y_br-5,
+                        "text": word.display_text,
                         "font": text_block._font,
                         "color": rgb_color,
                         "anchor": None,
