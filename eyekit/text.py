@@ -76,6 +76,9 @@ class Box:
         """XY-coordinates of the center of the bounding box"""
         return self.x, self.y
 
+    def adjust_box(self, bbox):
+        self._x_tl, self._y_tl, self._x_br, self._y_br = bbox
+
 
 class Character(Box):
 
@@ -1007,3 +1010,9 @@ class TextBlock(Box):
             "alphabet": self.alphabet,
             "autopad": self.autopad,
         }
+
+    def adjust_word_box(self, word_bboxes):
+        for i, word in enumerate(self.words(alphabetical_only=False)):
+            word.adjust_box(word_bboxes[i])
+        for i, word in enumerate(self.words(alphabetical_only=True)):
+            word.adjust_box(word_bboxes[i])
